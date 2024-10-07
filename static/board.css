@@ -1,0 +1,894 @@
+html, body {
+    height: 100%; 
+    margin: 0;
+    display: flex; 
+    flex-direction: column; 
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #ffffff;
+    color: #22303F;
+}
+
+/* Floating navigation bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    padding: 25px 50px 15px; 
+    z-index: 1000;
+}
+
+.logo {
+    cursor: pointer;
+}
+
+
+.menu {
+    display: flex;
+    gap: 40px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #22303F;
+    font-size: 1.1em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.menu a:hover {
+    color: #FF7F50;
+}
+
+.menu a.login {
+    color: white;
+}
+
+.login {
+    background-color: #22303F;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+}
+
+.login:hover {
+    background-color: #FF7F50;
+}
+
+
+/* Align the logo and search bar */
+.logo-search {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.search-bar input {
+    padding: 8px 16px;
+    padding-right: 40px; 
+    border-radius: 10px;
+    border: 2px solid #cccccc85;
+    font-size: 1rem;
+    width: 350px;
+    height: 28px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    color: #22303F;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.search-icon:hover {
+    color: #FF7F50;
+}
+
+/* Dropdown menu styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: transparent;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border: 2px solid #00000085;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 1rem;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #FF7F50;
+    color: white;
+    border: 2px solid #FF7F50;
+}
+
+/* Login Modal (hidden by default) */
+.loginmodal {
+    display: none; 
+    position: fixed; 
+    z-index: 9999; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(3px); 
+}
+
+.loginmodal-content {
+    display: flex;                  
+    flex-direction: column;        
+    background-color: white;
+    margin: 10% auto; 
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    position: relative; 
+}
+
+/* Close Button (X) */
+.close-button {
+    position: absolute;
+    top: 35px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 34px;
+    cursor: pointer;
+    color: #333; 
+}
+
+.close-button:hover {
+    color: #FF7F50; 
+}
+
+.left-align {
+    text-align: left;
+    margin-bottom: 5px; 
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.social-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px; 
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 10px 0;
+    width: 85%; 
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold; 
+    color: #333; 
+}
+
+.social-button:hover {
+    background-color: #f4f4f4;
+}
+
+.social-button img {
+    margin-right: 10px;
+}
+
+
+.center-align {
+    color: #666;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 4px;
+}
+
+
+/* ============================
+   Main Content Styles
+============================ */
+
+/* Updated .main-content */
+.main-content {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    margin-top: 85px; /* Adjust for navbar */
+    overflow: hidden; /* Hide default scrollbars */
+    background-color: #ffffff;
+    padding: 0; /* Remove padding to utilize full space */
+    display: block; /* Remove flex properties */
+    cursor: default; /* Default cursor */
+}
+
+/* Updated #virtual-whiteboard */
+#virtual-whiteboard {
+    position: relative; /* Ensure children can be positioned relative to this container */
+    width: 10000px;
+    height: 10000px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: 
+        linear-gradient(90deg, #e0e0e0 1px, transparent 1px),
+        linear-gradient(180deg, #e0e0e0 1px, transparent 1px);
+    background-size: 25px 25px;
+    cursor: grab;
+    transition: transform 0.3s; /* Smooth transition for panning and zooming */
+}
+
+/* Central Lines on Whiteboard */
+#virtual-whiteboard::before,
+#virtual-whiteboard::after {
+    content: '';
+    position: absolute;
+    background-color: #000; /* Color of the central lines */
+}
+
+/* Central Vertical Line (Y-axis) */
+#virtual-whiteboard::before {
+    top: 0;
+    bottom: 0;
+    left: 50%; /* Center horizontally */
+    width: 1.5px; /* Thickness of the line */
+    transform: translateX(-50%);
+}
+
+/* Central Horizontal Line (X-axis) */
+#virtual-whiteboard::after {
+    left: 0;
+    right: 0;
+    top: 50%; /* Center vertically */
+    height: 1.5px; /* Thickness of the line */
+    transform: translateY(-50%);
+}
+
+/* Tab Content Styles */
+.tab-content {
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    position: relative; /* For absolutely positioned components */
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Specific styles for each tab */
+#mood-board,
+#color,
+#font,
+#components {
+    overflow: auto; /* Enable scrolling if content overflows */
+    height: 100%;
+}
+
+
+/* ============================
+   Toolbox Container
+============================ */
+
+.toolbox-container {
+    position: fixed;
+    left: 30px; /* Distance from the left side */
+    top: 50%; /* Centered vertically */
+    transform: translateY(-50%); /* Adjust to truly center */
+    z-index: 1000; /* Ensure it stays above other elements */
+    background-color: #22303F; /* Background color for harmony */
+    padding: 15px;
+    border-radius: 20px;
+}
+
+/* Controls Container */
+.controls-container {
+    display: flex;
+    max-width: 100px;
+    flex-direction: column; /* Stack the main sections vertically */
+    gap: 1px; /* Space between sections */
+}
+
+/* Button Styles for Toolbox Container */
+.toolbox-container button {
+    background-color: #22303F; 
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width:50%; 
+    height: 50px; 
+    font-size: 16px; 
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Hover Styles */
+.toolbox-container button:hover {
+    background-color: #FF7F50; /* Change background color on hover */
+}
+
+/* Active Styles */
+.toolbox-container button.active {
+    background-color: #FF7F50; /* Change color for active state */
+}
+
+/* Background Button Styles */
+.dashboard-container {
+    display: flex;
+    justify-content: space-between; /* Space between zoom buttons */
+    border-bottom: 1.5px solid #e0e0e078; 
+    margin-bottom: 5px;
+}
+
+
+/* Zoom Button Styles */
+.zoom-container {
+    display: flex;
+    justify-content: space-between; /* Space between zoom buttons */
+}
+
+/* Text Button Styles */
+.text-container {
+    display: flex;
+    justify-content: space-between; /* Space between text buttons */
+}
+
+/* Icon Button Styles */
+.icon-container {
+    display: flex;
+    justify-content: space-between; /* Space between draw and eraser buttons */
+    border-bottom: 1.5px solid #e0e0e078; 
+    margin-bottom: 5px;
+}
+
+/* Line Controls Styles */
+.line-controls {
+    display: flex;
+    flex-direction: column; /* Stack controls vertically */
+    gap: 1px; /* Increased space between line controls for better visibility */
+}
+
+/* Label Styles */
+.line-controls label {
+    font-size: 14px; /* Adjust label font size */
+    color: #22303F; /* Match label color with the theme */
+}
+
+/* Line Size Slider Styles */
+#lineSize {
+    -webkit-appearance: none; /* Remove default styles */
+    appearance: none; /* Remove default styles */
+    width: 100%; /* Full width */
+    height: 6px; /* Height of the slider */
+    border-radius: 5px; /* Rounded edges */
+    background: #FF7F50; /* Slider track color */
+    outline: none; /* Remove outline */
+    transition: background 0.3s; /* Smooth transition for background color */
+}
+
+#lineSize::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default styles */
+    appearance: none; /* Remove default styles */
+    width: 16px; /* Width of the thumb */
+    height: 16px; /* Height of the thumb */
+    border-radius: 50%; /* Round thumb */
+    background: #ffffff; /* Thumb color */
+    cursor: pointer; /* Pointer cursor */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slight shadow */
+}
+
+/* Slider Hover Effect */
+#lineSize:hover {
+    background: #FFB6A1; /* Lighter color on hover */
+}
+
+/* Color Picker Styles */
+#lineColor {
+    border: none; /* Remove border */
+    width: 100%; /* Full width */
+    height: 40px; /* Height of the color picker */
+    border-radius: 5px; /* Rounded edges */
+    cursor: pointer; /* Pointer cursor */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slight shadow */
+}
+
+/* Color Picker Background */
+#lineColor::-webkit-color-swatch {
+    border-radius: 5px; /* Rounded edges for color swatch */
+    border: none; /* Remove border */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slight shadow */
+}
+
+
+/* Move Button Styles */
+.move-container {
+    position: fixed;
+    bottom: 10px;
+    right: 100px; 
+    z-index: 999;
+}
+
+.move-button {
+    background-color: #22303F;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.move-button:hover {
+    background-color: #FF7F50; /* Hover effect */
+}
+
+
+/* Coordinates Display Styles */
+.coordinates {
+    background-color: rgba(106, 141, 178, 0.431); /* Semi-transparent background */
+    color: rgb(0, 0, 0);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 999;
+}
+
+
+/* ============================
+   Component Styles
+============================ */
+
+/* Image Component Styles */
+.custom-image {
+    width: 150px; /* Set desired width */
+    height: auto; /* Maintain aspect ratio */
+    margin: 10px; /* Add some spacing */
+    position: absolute; /* Allows positioning based on left/top */
+    cursor: grab; /* Optional: change cursor on hover */
+    transition: transform 0.3s; /* Optional: smooth scaling on hover */
+}
+
+.custom-image:hover {
+    transform: scale(1.05); /* Slightly enlarge image on hover */
+}
+
+/* Color Swatch Container */
+.color-swatch-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    z-index: 10;
+}
+
+/* Flip Container for Color Swatches (if implementing flip effect) */
+.flip-container {
+    width: 250px; 
+    height: 360px; 
+    perspective: 1000px; 
+}
+
+/* Color Swatch Front and Back */
+.color-swatch {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column; 
+    border-radius: 20px;
+    position: absolute;
+    backface-visibility: hidden;
+    transition: transform 0.6s; 
+    padding: 10px; 
+}
+
+.color-swatch-back {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    backface-visibility: hidden; 
+    transform: rotateY(180deg); 
+    border-radius: 20px;
+    padding: 10px; 
+}
+
+/* Text styles within components */
+.color-info {
+    text-align: left;
+}
+
+.color-info-title {
+    font-weight: bold; 
+    font-size: 1.8em; 
+    margin-bottom: 10px; 
+}
+
+/* Button styles */
+.copy-button {
+    padding: 5px 10px;
+    background-color: #22303F;
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    margin-top: 10px;
+    transition: background-color 0.3s;
+    width: 60px;
+    height: 30px;
+}
+
+.copy-button:hover {
+    background-color: #FF7F50;
+}
+
+/* Smooth font size transitions */
+.color-info-title,
+.color-info,
+.copy-button {
+    transition: font-size 0.2s, transform 0.2s;
+}
+
+/* ============================
+   Animations
+============================ */
+
+/* Cool Tab Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+
+/* Alert Modal (hidden by default) */
+.alertmodal {
+    display: none;
+    position: fixed; 
+    z-index: 9999; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px); 
+}
+
+.alertmodal-content {
+    display: flex;                  
+    flex-direction: column;        
+    background-color: white;
+    margin: 15% auto; 
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+}
+
+#closeAlertButton {
+    padding: 10px 20px;
+    background-color: #22303F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: auto;             
+    align-self: flex-end;          
+}
+
+
+#closeAlertButton:hover {
+    background-color: #FF7F50;
+}
+
+
+
+
+/* Save Screen Modal */
+.savemodal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+}
+
+.saveScreen-content {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+    align-items: center; /* Center content horizontally */
+}
+
+/* Label Style */
+.save-label {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #22303F;
+}
+
+/* Input for Save Name */
+.save-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Collection Section */
+.collection-section {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+.new-collection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #22303F;
+    cursor: pointer;
+}
+
+.plus-button {
+    background-color: #FF7F50;
+    border: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.plus-button:hover {
+    background-color: #22303F;
+}
+
+/* Save and Cancel Buttons */
+.save-cancel-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.save-button, .cancel-button {
+    width: 48%;
+    padding: 10px 20px;
+    background-color: #22303F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-button:hover, .cancel-button:hover {
+    background-color: #FF7F50;
+}
+
+
+/* Modal styles */
+.savemodal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+}
+
+/* Save screen content styles */
+.saveScreen-content {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px; /* Increased width for better layout */
+}
+
+/* Input Section styles */
+.save-label {
+    font-size: 16px;
+    color: #22303F;
+}
+
+/* Save Input */
+.save-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Collection Section styles */
+.collection-section {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Current Collection box */
+.collection-box {
+    max-height: 200px; /* Set a max height */
+    overflow-y: auto; /* Enable scrolling */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+/* Collection Header */
+.collection-header {
+    font-size: 18px;
+    color: #22303F;
+    margin-bottom: 10px;
+}
+
+/* Collection Items */
+.collection-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.collection-item input {
+    margin-right: 10px; /* Space between checkbox and label */
+}
+
+/* Add New Collection Section */
+.new-collection {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.new-collection .collection-input {
+    flex: 1; /* Take up the remaining space */
+    padding: 10px;
+    margin-right: 10px; /* Space between input and button */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button Styles */
+.plus-button {
+    background-color: #22303F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.plus-button:hover {
+    background-color: #FF7F50;
+}
+
+/* Save and Cancel Buttons */
+.save-cancel-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.cancel-button, .save-button {
+    width: 48%;
+    padding: 10px;
+    background-color: #22303F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-button:hover, .save-button:hover {
+    background-color: #FF7F50;
+}
+
+
+
+/* Footer */
+.footer {
+    background-color: #22303F;
+    color: white;
+    text-align: left;
+    padding: 20px;
+    margin-top: auto;
+    position: relative; 
+    width: 100%;
+}
+
+.footer-content {
+    font-size: 16px;
+}
+
+
+

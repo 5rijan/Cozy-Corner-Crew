@@ -1,0 +1,679 @@
+html, body {
+    height: 100%; 
+    margin: 0;
+    display: flex; 
+    flex-direction: column; 
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #ffffff;
+    color: #22303F;
+}
+
+
+
+/* Floating navigation bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    padding: 25px 50px 15px; 
+    z-index: 1000;
+    
+}
+
+/* Logout button positioned on the right */
+.logout-button {
+    background-color: #22303F;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: auto; /* Pushes the button to the right */
+    text-decoration: none; /* Removes underline */
+}
+
+.logout-button:hover {
+    background-color: #FF7F50;
+}
+
+.logout-button:hover {
+    background-color: #FF7F50;
+}
+
+/* ============================
+   Main Content Styles
+============================ */
+
+.content {
+    position: relative;
+    margin-top: 150px; 
+    background-color: #ffffff;
+    padding-bottom: 100px; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+;
+}
+
+/* Large search bar */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin-bottom: 60px;
+    padding-bottom: 40px;
+    padding-top: 40px;
+    border-bottom: 2.5px solid #e0e0e078;
+}
+
+.search-bar {
+    width: 60%;
+    height: 40.5px;
+    padding: 8px;
+    font-size: 1.1em;
+    border-radius: 25px;
+    border: 2px solid #22303F;
+}
+
+.search-button {
+    padding: 15px 30px;
+    font-size: 1.5em;
+    border: none;
+    background-color: #22303F;
+    color: white;
+    border-radius: 20px;
+    margin-left: 10px;
+    cursor: pointer; 
+
+}
+
+.search-button:hover {
+    background-color: #FF7F50;
+}
+
+/* Main design display container */
+.design-display-container {
+    width: 80%;
+    min-height: 300px; /* Large container size */
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 50px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.186);
+}
+
+/* Tab buttons (All Designs and Collections) */
+.tab-buttons {
+    display: flex;
+    margin-bottom: 15px; 
+    position: relative; 
+}
+
+.tab-button {
+    padding: 10px 20px;
+    font-weight: bold; 
+    color: #22303F; 
+    cursor: pointer;
+    margin-right: 10px; 
+    position: relative; 
+    
+}
+
+/* Active tab styling */
+.tab-button.active {
+    color: #FF7F50; 
+}
+
+/* Underline indicator */
+.underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 12%; 
+    background-color: #FF7F50;
+    transition: left 0.3s ease;
+}
+
+/* Add buttons (shown when Collections tab is active) */
+.add-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.add-button {
+    font-weight: bold; 
+    padding: 10px 20px;
+    background-color: #22303F;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.add-button:hover {
+    background-color: #FF7F50;
+}
+
+/* Tab content styling */
+.tab-content {
+    width: 100%;
+    flex-grow: 1; 
+    border-top: 1px solid #ffffff;
+    padding-top: 20px;
+    border-top: 2.5px solid #e0e0e078;
+}
+
+.tab {
+    display: none;
+    text-align: center;
+}
+
+.tab.active {
+    display: block;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.card {
+    width: 200px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.card-header {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card-body {
+    font-size: 14px;
+}
+
+
+
+/* Add New Collection Modal */
+.savemodal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+}
+
+.addCollection-content {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+    align-items: center;
+}
+
+/* Modal Header */
+.modal-header {
+    width: 100%;
+    text-align: left; /* Aligns the title to the left */
+    font-size: 18px;
+    color: #22303F;
+    margin-bottom: 20px;
+}
+
+/* Label Style */
+.collection-label {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #22303F;
+    text-align: left;
+    width: 100%; /* Full width for label */
+}
+
+/* Input for New Collection Name */
+.collection-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Collection Buttons */
+.collection-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Create and Cancel Buttons */
+.cancel-button, .create-button {
+    width: 48%;
+    padding: 10px 20px;
+    background-color: #22303F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-button:hover, .create-button:hover {
+    background-color: #FF7F50;
+}
+
+/* Edit Board and Collection Modal - Reuse existing styles */
+
+/* Modal Wrapper (for all modals) */
+.savemodal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+}
+
+/* Modal Content */
+.editBoard-content, .editCollection-content {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+    align-items: center;
+}
+
+/* Modal Header */
+.modal-header {
+    width: 100%;
+    text-align: left;
+    font-size: 18px;
+    color: #22303F;
+    margin-bottom: 20px;
+}
+
+/* Label */
+.collection-label {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #22303F;
+    text-align: left;
+    width: 100%;
+}
+
+/* Input Fields */
+.collection-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Buttons */
+.collection-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.cancel-button, .create-button {
+    width: 48%;
+    padding: 10px 20px;
+    background-color: #22303F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-button:hover, .create-button:hover {
+    background-color: #FF7F50;
+}
+
+
+
+
+/* Alert Modal (hidden by default) */
+.alertmodal {
+    display: none;
+    position: fixed; 
+    z-index: 9999; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px); 
+}
+
+.alertmodal-content {
+    display: flex;                  
+    flex-direction: column;        
+    background-color: white;
+    margin: 15% auto; 
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+}
+
+#closeAlertButton {
+    padding: 10px 20px;
+    background-color: #22303F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: auto;             
+    align-self: flex-end;          
+}
+
+
+#closeAlertButton:hover {
+    background-color: #FF7F50;
+}
+
+
+
+/* The Modal (background) */
+.collection-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+}
+
+/* Modal Content */
+.collection-modal-content {
+    background-color: white;
+    margin: 10% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%; /* Adjust width as needed */
+    max-width: 800px; /* Maximum width for larger screens */
+    border-radius: 12px; /* Round corners */
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.25); /* Add shadow for depth */
+}
+
+/* Title */
+.collection-title {
+    font-size: 30px; /* Font size for the title */
+    margin-bottom: 15px; /* Space below title */
+    text-align: center; /* Center align title */
+    color: #22303F; /* Title color */
+}
+
+/* Close Button */
+#collection-close-button {
+    color: #888; /* Default color for close button */
+    float: right;
+    font-size: 30px; /* Size of the close button */
+    font-weight: bold;
+    transition: color 0.3s; /* Transition effect */
+}
+
+#collection-close-button:hover,
+#collection-close-button:focus {
+    color: #FF7F50; /* Change color on hover */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Board List */
+.boards-list {
+    display: flex;
+    flex-wrap: wrap; 
+    margin-bottom: 20px; 
+}
+
+/* Buttons for Edit and Delete */
+.action-buttons {
+    display: flex; 
+    justify-content: flex-end; 
+    margin-top: 25px; 
+}
+
+.action-button {
+    background-color: #22303F; 
+    color: white; 
+    border: none;
+    padding: 12px 18px;
+    border-radius: 6px; 
+    cursor: pointer;
+    margin-left: 12px; 
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-button:hover {
+    background-color: #FF7F50; 
+    transform: translateY(-2px); 
+}
+
+.action-button:active {
+    transform: translateY(0); 
+}
+
+
+
+.board-card {
+    width: 200px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin: 20px;
+    text-align: center;
+    transition: transform 0.2s ease;
+    position: relative;
+    
+
+}
+
+.board-card:hover {
+    transform: scale(1.05);
+}
+
+
+.card-image {
+    width: 100%;
+    height: 230px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-details {
+    padding: 10px 0;
+}
+
+.card-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.card-link {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.card-options {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.dropdown-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    padding: 8px 16px;
+    display: block;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Add this class to show the dropdown menu when the button is clicked */
+.dropdown-content.show {
+    display: block;
+}
+
+
+.folder-card {
+    width: 200px;
+    background-color: #ffffff; 
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.folder-card:hover {
+    transform: scale(1.05);
+}
+
+.folder-image {
+    background-color: #fff; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 5px; 
+    margin-bottom: 10px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.folder-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+.folder-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.folder-info {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 5px;
+}
+
+
+/* Footer section */
+.footer {
+    background-color: #22303F;
+    color: white;
+    padding: 20px;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-content {
+    font-size: 16px;
+    flex: 1;
+    text-align: left;
+}
+
+/* Footer links on the right */
+.footer-links {
+    display: flex;
+    gap: 20px; /* Space between each link */
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}

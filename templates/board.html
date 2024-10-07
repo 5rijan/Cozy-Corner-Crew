@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/board.css">
+    <!-- Google Fonts Link for Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="session-data"
+    data-username="{{ user_name }}"
+    data-authid="{{users_authid}}"
+    site-name="{{site_name}}"
+    user-id="{{user_id}}" >
+</div>
+
+<!-- Navigation bar -->
+<div class="navbar">
+    <div class="logo-search">
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <img src="/static/resources/logo.png" alt="Logo" width="150" height="85">
+            </a>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Paste a website url..." id="searchInput">
+            <span class="search-icon">→</span>
+        </div>
+    </div>
+
+    <div class="menu">
+        <div class="dropdown">
+            <button class="dropbtn" id="dropdownBtn">Mood Board</button> 
+            <div class="dropdown-content">
+                <a href="#" data-tab="mood-board">Mood Board</a>
+                <a href="#" data-tab="color">Color</a>
+                <a href="#" data-tab="font">Font</a>
+                <a href="#" data-tab="components">Components</a>
+            </div>
+        </div>
+        <a href="{{ url_for('pricing') }}" class="pricing-link" style="display: inline;">Pricing</a>
+        <a class="login" id="login_btn" style="display: inline;">Sign in</a>
+        <a class="user-dashboard" id="userDashboard" style="display: none;"></a> <!-- User dashboard link -->
+        </div>
+</div>
+
+
+
+    <!-- Main Content Section (Full screen) -->
+    <div class="main-content">
+        <div id="virtual-whiteboard">
+            <!-- Tab contents inside the whiteboard -->
+            <div id="mood-board" class="tab-content active"></div>
+            <div id="color" class="tab-content"></div>
+            <div id="font" class="tab-content"></div>
+            <div id="components" class="tab-content"></div>
+        </div>
+
+        <!-- Move Button and Coordinates Display -->
+        <div class="coordinates" id="coordinates">X: 0, Y: 0</div>
+        <div class="move-container">
+            <button class="move-button" id="toggleMove">Move</button>
+        </div>
+    </div>
+
+    <!-- Toolbox Container -->
+    <div class="toolbox-container">
+        <div class="controls-container">
+
+            <!-- Zoom In and Zoom Out Buttons -->
+            <div class="zoom-container">
+                <button class="zoom-button" id="zoomIn"> <img src="/static/resources/math-plus.svg" width="25" height="25"> </button>
+                <button class="zoom-button" id="zoomOut"> <img src="/static/resources/math-minus.svg" width="25" height="25"> </button>
+            </div>
+
+            <!-- Background change and Save Buttons -->
+            <div class="dashboard-container">
+                <button class="dashboard-button" id="save"> <img src="/static/resources/save.svg" width="25" height="25"> </button>
+                <button class="dashboard-button" id="background-change"> <img src="/static/resources/background.svg" width="25" height="25"> </button>
+            </div>
+
+            <!-- Add Text and Empty Buttons -->
+            <div class="text-container">
+                <button class="add-text-button" id="addText"> <img src="/static/resources/format-text.svg" width="30" height="30"> </button>
+                <button class="empty-button" id="empty"> <img src="/static/resources/image.svg" width="25" height="25"> </button>
+            </div>
+
+            <!-- Draw and Eraser Icons -->
+            <div class="icon-container">
+                <button class="draw-button" id="toggleDraw"> <img src="/static/resources/pen.svg" width="25" height="25"></button>
+                <button class="eraser-button" id="toggleEraser"> <img src="/static/resources/erase.svg" width="25" height="25"> </button>
+            </div>
+
+            <!-- Line Controls -->
+            <div class="line-controls">
+                <label for="lineSize">Line Size:</label>
+                <input type="range" id="lineSize" min="1" max="10" value="2">
+                <label for="lineColor">Line Color:</label>
+                <input type="color" id="lineColor" value="#000000">
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="customlogin" class="loginmodal">
+        <div class="loginmodal-content">
+            <button id="loginmodalclose" class="close-button">&times;</button>
+            <h2 class="left-align">Sign in for free</h2>
+            <p class="left-align" style='font-size: 1em;'>Save your favorite designs to a personal design book by signing in:</p>
+            
+            <!-- Authentication Buttons -->
+            <div class="button-container">
+                <a href="{{ url_for('google.login') }}" id="googleSignIn" class="social-button">
+                    <img src="../static/resources/Google__G__logo.svg" alt="Google Logo" width="20" height="20">
+                    <strong>Continue with Google</strong>
+                </a>
+                <a href="#" id="appleSignIn" class="social-button"> 
+                    <img src="../static/resources/apple-logo-transparent.png" alt="Apple Logo" width="20" height="20">
+                    <strong>Continue with Apple</strong>
+                </a>
+                <a href="#" id="githubSignIn" class="social-button">
+                    <img src="../static/resources/github-mark.png" alt="GitHub Logo" width="20" height="20">
+                    <strong>Continue with GitHub</strong>
+                </a>
+            </div>
+
+            <p class="center-align terms-text">By signing in, you agree to our <br>Privacy Policy and Terms of Use.</p>
+        </div>
+    </div>
+
+    <!-- Alert Modal -->
+    <div id="customAlert" class="alertmodal">
+        <div class="alertmodal-content">
+            <p id="alertMessage"></p>
+            <button id="closeAlertButton">OK</button>
+        </div>
+    </div>
+
+
+    <!-- Save Screen Modal -->
+    <div id="saveScreen" class="savemodal">
+        <div class="saveScreen-content">
+            <!-- Save Input Section -->
+            <label for="saveName" class="save-label">Save as:</label>
+            <input type="text" id="saveName" class="save-input" placeholder="Enter name...">
+
+            <!-- Collection Section -->
+            <div class="collection-section">
+                <div id="currentCollection" class="collection-box">
+                    <div class="collection-header">
+                        <strong>Current Collections</strong>
+                    </div>
+                    <!-- Display collections as checkboxes -->
+                    <form id="collectionForm">
+                        {% for collection in collections %}
+                            <div class="collection-item">
+                                <input type="checkbox" id="collection-{{ collection.id }}" name="collection" value="{{ collection.id }}">
+                                <label for="collection-{{ collection.id }}">{{ collection.name }}</label>
+                            </div>
+                        {% else %}
+                            <p>No collections found</p>
+                        {% endfor %}
+                    </form>
+                </div>
+
+                <!-- Add new collection option -->
+                <div id="addCollection" class="new-collection">
+                    <input type="text" id="newCollectionName" class="collection-input" placeholder="New collection name...">
+                    <button id="addCollectionButton" class="plus-button">+</button>
+                </div>
+            </div>
+
+            <!-- Save and Cancel Buttons -->
+            <div class="save-cancel-buttons">
+                <button id="cancelButton" class="cancel-button">Cancel</button>
+                <button id="saveButton" class="save-button">Save</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Scripts -->
+    <script src="/static/board.js"></script>
+
+</body>
+</html>

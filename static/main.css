@@ -1,0 +1,299 @@
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background-color: #ffffff;
+    background-repeat: repeat;
+    background-size: auto;
+    flex-direction: column; 
+    color: #22303F;
+}
+
+/* Styling for the floating navigation bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    padding: 25px 50px 15px; 
+    z-index: 1000;
+}
+
+.logo {
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    gap: 40px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #22303F;
+    font-size: 1.1em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.menu a:hover {
+    color: #FF7F50;
+}
+
+.menu a.login {
+    color: white;
+}
+
+.login {
+    background-color: #22303F;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+}
+
+.login:hover {
+    background-color: #FF7F50;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    text-align: center;
+    border-bottom: 2px solid #e0e0e0; 
+
+}
+
+.hero-title {
+    font-size: 3em;
+    color: #22303F;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+/* Large search bar */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+
+.search-bar {
+    width: 60%;
+    height: 40.5px;
+    padding: 8px;
+    font-size: 1.1em;
+    border-radius: 25px;
+    border: 2px solid #22303F;
+}
+
+.search-button {
+    padding: 15px 30px;
+    font-size: 1.5em;
+    border: none;
+    background-color: #22303F;
+    color: white;
+    border-radius: 20px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #FF7F50;
+}
+
+/* Call to Action Section */
+.cta-section {
+    padding: 50px;
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.cta-section p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+
+/* Alert Modal (hidden by default) */
+.alertmodal {
+    display: none;
+    position: fixed; 
+    z-index: 9999; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px); 
+}
+
+.alertmodal-content {
+    display: flex;                  
+    flex-direction: column;        
+    background-color: white;
+    margin: 15% auto; 
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+}
+
+#closeAlertButton {
+    padding: 10px 20px;
+    background-color: #22303F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: auto;             
+    align-self: flex-end;          
+}
+
+
+#closeAlertButton:hover {
+    background-color: #FF7F50;
+}
+
+
+/* Login Modal (hidden by default) */
+.loginmodal {
+    display: none; 
+    position: fixed; 
+    z-index: 9999; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(3px); 
+}
+
+.loginmodal-content {
+    display: flex;                  
+    flex-direction: column;        
+    background-color: white;
+    margin: 10% auto; 
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    position: relative; 
+}
+
+/* Close Button (X) */
+.close-button {
+    position: absolute;
+    top: 35px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 34px;
+    cursor: pointer;
+    color: #333; 
+}
+
+.close-button:hover {
+    color: #FF7F50; 
+}
+
+.left-align {
+    text-align: left;
+    margin-bottom: 5px; 
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.social-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px; 
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 10px 0;
+    width: 85%; 
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold; 
+    color: #333; 
+}
+
+.social-button:hover {
+    background-color: #f4f4f4;
+}
+
+.social-button img {
+    margin-right: 10px;
+}
+
+
+.center-align {
+    color: #666;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 4px;
+}
+
+/* Footer section */
+.footer {
+    background-color: #22303F;
+    color: white;
+    padding: 20px;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-content {
+    font-size: 16px;
+    flex: 1;
+    text-align: left;
+}
+
+/* Footer links on the right */
+.footer-links {
+    display: flex;
+    gap: 20px; /* Space between each link */
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}

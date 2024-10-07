@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/main.css">
+    <!-- Google Fonts Link for Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <!-- Navigation bar -->
+    <div class="navbar">
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <img src="/static/resources/logo.png" alt="Logo" width="150" height="85" >
+            </a>
+        </div>
+        <div class="menu">
+            <a href="{{ url_for('pricing') }}">Pricing</a>
+            <a class="login" id="login_btn">Sign in</a> 
+        </div>
+    </div>
+
+    <!-- Hero Section: Tagline & Search Bar -->
+    <div class="hero">
+        <h1 class="hero-title">Design, Extract, Collaborate </h1>
+        <p class="hero-subtitle">From Inspiration to Creation: Extract, Build, <br> Save, and Collaborate on Your Ultimate Design Board.</p>
+
+        <div class="search-container">
+            <input class="search-bar" id="urlInput" type="text" placeholder="Paste a website URL...">
+            <button class="search-button" id="processButton">Analyze</button>
+        </div>
+    </div>
+
+    <!-- Call to Action Section -->
+    <div class="cta-section">
+        <h2>Save, Analyze, and Explore Designs</h2>
+        <p>Create design boards from your favorite websites and never lose inspiration again!</p>
+    </div>
+
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-content">
+            <p>Built with ♥ by Srijan on Gadigal land.</p>
+        </div>
+        <div class="footer-links">
+            <a href="mailto:srijanchaudhary2003@gmail.com" class="footer-link">Support</a>
+            <a href="{{ url_for('pricing') }}" class="footer-link">Premium</a>
+            <a href="#" class="footer-link">Term of use</a>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="customlogin" class="loginmodal">
+        <div class="loginmodal-content">
+            <button id="loginmodalclose" class="close-button">&times;</button>
+            <h2 class="left-align">Sign in for free</h2>
+            <p class="left-align" style = 'font-size: 1em;'>Save your favorite designs to a personal design book by signing in:</p>
+            
+            <!-- Authentication Buttons -->
+            <div class="button-container">
+                <a href="{{ url_for('google.login') }}" id="googleSignIn" class="social-button">
+                    <img src="static/resources/Google__G__logo.svg" alt="Google Logo" width="20" height="20">
+                    <strong>Continue with Google</strong>
+                </a>
+                <a href="#" id="appleSignIn" class="social-button"> <!-- Use href for Apple sign-in as well -->
+                    <img src="static/resources/apple-logo-transparent.png" alt="Apple Logo" width="20" height="20">
+                    <strong>Continue with Apple</strong>
+                </a>
+                <a href="#" id="githubSignIn" class="social-button"> <!-- Use href for GitHub sign-in as well -->
+                    <img src="static/resources/github-mark.png" alt="GitHub Logo" width="20" height="20">
+                    <strong>Continue with GitHub</strong>
+                </a>
+            </div>
+
+
+            <p class="center-align terms-text">By signing in, you agree to our <br>Privacy Policy and Terms of Use.</p>
+        </div>
+    </div>
+
+    <!-- Alert Modal -->
+    <div id="customAlert" class="alertmodal">
+        <div class="alertmodal-content">
+            <p id="alertMessage"></p>
+            <button id="closeAlertButton">OK</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/main.js"></script>
+</body>
+</html>

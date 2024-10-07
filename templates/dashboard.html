@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container">
+        <div class="navbar">
+            <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+        </div>
+
+        <div class="content">
+            <div class="logo">
+                <img src="/static/resources/logo.png" alt="Logo" width="180" height="110">
+            </div>
+
+            <div id="session-data"
+                data-username="{{ user_name }}"
+                data-authid="{{ auth }}"
+                data-user-id="{{ user_id }}"
+                data-boards='{{ boards|tojson }}'
+                data-collections='{{ collections|tojson }}'>
+            </div>
+
+            <div class="search-container">
+                <input class="search-bar" id="urlInput" type="text" placeholder="Paste a website URL...">
+                <button class="search-button" id="processButton">Analyze</button>
+            </div>
+
+            <div class="design-display-container">
+                <div class="tab-buttons">
+                    <span class="tab-button active" id="allDesignsTab" onclick="showTab('designs')">All Designs</span>
+                    <span class="tab-button" id="collectionsTab" onclick="showTab('collections')">Collections</span>
+                    <div class="underline"></div>
+                </div>
+                <div class="add-buttons" id="addButtons" style="display: none;">
+                    <button class="add-button" id="add-collection">Add Collection</button>
+                </div>
+                <div class="tab-content" id="tabContent">
+                    <!-- Boards Section -->
+                    <div id="designs" class="tab" style="display: block;">
+                        <div class="card-container" id="boardsContainer"></div>
+                    </div>
+            
+                    <!-- Collections Section -->
+                    <div id="collections" class="tab" style="display: none;">
+                        <div class="card-container" id="collectionsContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-content">
+            <p>Built with ♥ by Srijan on Gadigal land.</p>
+        </div>
+        <div class="footer-links">
+            <a href="mailto:srijanchaudhary2003@gmail.com" class="footer-link">Support</a>
+            <a href="{{ url_for('pricing') }}" class="footer-link">Premium</a>
+            <a href="#" class="footer-link">Term of use</a>
+        </div>
+    </div>
+
+           
+    <!-- Add New Collection Modal -->
+    <div id="addCollectionScreen" class="savemodal">
+        <div class="addCollection-content">
+            <!-- Header -->
+            <div class="modal-header">
+                <strong>Add New Collection</strong>
+            </div>
+
+            <!-- Input Section -->
+            <label for="newCollectionName" class="collection-label">Enter a name for your new collection:</label>
+            <input type="text" id="newCollectionName" class="collection-input" placeholder="Collection name...">
+
+            <!-- Cancel and Create Buttons -->
+            <div class="collection-buttons">
+                <button id="cancelCreateButton" class="cancel-button">Cancel</button>
+                <button id="createButton" class="create-button">Create</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Edit Board Modal -->
+    <div id="editBoardModal" class="savemodal">
+        <div class="editBoard-content">
+            <!-- Header -->
+            <div class="modal-header">
+                <strong>Edit Board</strong>
+            </div>
+            <div id="board_id"></div>
+            <!-- Input Section -->
+            <label for="newBoardName" class="collection-label">Enter a new name for your board:</label>
+            <input type="text" id="newBoardName" class="collection-input" placeholder="Board name...">
+
+            <!-- Cancel and Save Buttons -->
+            <div class="collection-buttons">
+                <button id="cancelEditBoardButton" class="cancel-button">Cancel</button>
+                <button id="saveEditBoardButton" class="create-button">Save</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Edit Collection Modal -->
+    <div id="editCollectionModal" class="savemodal">
+        <div class="editCollection-content">
+            <!-- Header -->
+            <div class="modal-header">
+                <strong>Edit Collection</strong>
+            </div>
+            <!-- Input Section -->
+            <label for="newCollectionNameEdit" class="collection-label">Enter a new name for your collection:</label>
+            <input type="text" id="newCollectionNameEdit" class="collection-input" placeholder="Collection name...">
+
+            <!-- Cancel and Save Buttons -->
+            <div class="collection-buttons">
+                <button id="cancelEditCollectionButton" class="cancel-button">Cancel</button>
+                <button id="saveEditCollectionButton" class="create-button">Save</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Alert Modal -->
+    <div id="customAlert" class="alertmodal">
+        <div class="alertmodal-content">
+            <p id="alertMessage"></p>
+            <button id="closeAlertButton">OK</button>
+        </div>
+    </div>
+
+
+    <!-- Collection Popup Modal -->
+    <div id="collectionModal" class="collection-modal" style="display: none;">
+        <div id="collection_id"></div>
+        <div class="collection-modal-content">
+            <span id="collection-close-button">&times;</span>
+            <h2 id="collectionName" class="collection-title"></h2>
+            <div id="boardsList" class="boards-list"></div>
+            <div class="action-buttons">
+                <button class="action-button" onclick="editCollection()">Edit</button>
+                <button class="action-button" onclick="deleteCollection()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- scripts  -->
+    <script src="/static/dashboard.js"></script>
+
+</body>
+</html>
+
