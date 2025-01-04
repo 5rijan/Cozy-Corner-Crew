@@ -121,16 +121,8 @@ function createCopyButton(text) {
 
 
 let selectedComponent = null;
+
 class ImageComponent {
-    /**
-     * Creates an ImageComponent instance.
-     * @param {string} imageUrl - The URL of the image.
-     * @param {string} altText - The alt text for the image.
-     * @param {number} width - The initial width of the image in pixels.
-     * @param {HTMLElement} parentElement - The parent DOM element to append this component.
-     * @param {number} initialX - The initial X position (in pixels).
-     * @param {number} initialY - The initial Y position (in pixels).
-     */
     constructor(imageUrl, altText, width, parentElement, initialX, initialY) {
         this.imageUrl = imageUrl;
         this.altText = altText;
@@ -138,16 +130,13 @@ class ImageComponent {
         this.parentElement = parentElement;
         this.position = { x: initialX, y: initialY };
         this.scale = 1;
-        this.zIndex = 10; // Initial zIndex
+        this.zIndex = 10;
         this.selected = false;
         this.createElement();
         this.initDrag();
         this.initResize();
     }
 
-    /**
-     * Creates the image element and appends it to the parent.
-     */
     createElement() {
         this.container = document.createElement('div');
         this.container.style.position = 'absolute';
@@ -158,10 +147,9 @@ class ImageComponent {
         this.container.style.cursor = 'move';
         this.container.style.transformOrigin = 'top left';
         this.container.style.boxSizing = 'border-box';
-        
-        // Blue outline when selected
+
         this.container.style.border = this.selected ? '2px solid blue' : 'none';
-        
+
         this.img = document.createElement('img');
         this.img.src = this.imageUrl;
         this.img.alt = this.altText;
@@ -171,7 +159,7 @@ class ImageComponent {
         this.img.style.pointerEvents = 'none';
 
         this.container.appendChild(this.img);
-        
+
         this.resizeHandle = document.createElement('div');
         this.resizeHandle.style.width = '15px';
         this.resizeHandle.style.height = '15px';
@@ -182,6 +170,19 @@ class ImageComponent {
         this.resizeHandle.style.cursor = 'nwse-resize';
 
         this.container.appendChild(this.resizeHandle);
+
+        this.downloadButton = document.createElement('img');
+        this.downloadButton.src = 'static/resources/software-download.svg';
+        this.downloadButton.style.position = 'absolute';
+        this.downloadButton.style.width = '25px';
+        this.downloadButton.style.height = '25px';
+        this.downloadButton.style.right = '0';
+        this.downloadButton.style.top = '0';
+        this.downloadButton.style.cursor = 'pointer';
+        this.downloadButton.style.display = 'none';  // Hidden initially
+        this.downloadButton.addEventListener('click', () => this.downloadImage());
+
+        this.container.appendChild(this.downloadButton);
         this.parentElement.appendChild(this.container);
     }
 
@@ -216,67 +217,48 @@ class ImageComponent {
         document.addEventListener('mouseup', () => {
             if (isDragging) {
                 isDragging = false;
-                this.deselectComponent();
                 document.body.style.cursor = 'default';
             }
         });
     }
 
-
-    /**
-     * Updates the component's position.
-     * @param {number} x - New X position.
-     * @param {number} y - New Y position.
-     */
-        updatePosition(x, y) {
-            // Ensure the text box stays within the active tab boundaries
-            this.container.style.left = `${x}px`;
-            this.container.style.top = `${y}px`;
-            this.position.x = x;
-            this.position.y = y;
+    updatePosition(x, y) {
+        this.container.style.left = `${x}px`;
+        this.container.style.top = `${y}px`;
+        this.position.x = x;
+        this.position.y = y;
     }
-        
 
-
-    /**
-     * Initializes resizing functionality for the image component.
-     */
     initResize() {
         let isResizing = false;
         let startX, startY, startWidth, startHeight;
 
-        // Mouse down on the resize handle initiates resizing
         this.resizeHandle.addEventListener('mousedown', (e) => {
-            if (isMoving) return; // Prevent resizing when grid is moving
             isResizing = true;
             startX = e.clientX;
             startY = e.clientY;
             startWidth = this.img.offsetWidth;
-            startHeight = this.img.offsetHeight; // Store initial height
+            startHeight = this.img.offsetHeight;
             document.body.style.cursor = 'nwse-resize';
-            e.stopPropagation(); // Prevent dragging
+            e.stopPropagation();
             e.preventDefault();
         });
 
-        // Mouse move adjusts the width and height
         document.addEventListener('mousemove', (e) => {
-            if (isResizing && !isMoving) {
+            if (isResizing) {
                 const dx = e.clientX - startX;
                 const dy = e.clientY - startY;
-                const newWidth = Math.max(startWidth + dx, 100); // Minimum width of 100px
-                const newHeight = Math.max(startHeight + dy, 100); // Minimum height of 100px
+                const newWidth = Math.max(startWidth + dx, 100);
+                const newHeight = Math.max(startHeight + dy, 100);
 
-                // Update image dimensions
                 this.img.style.width = `${newWidth}px`;
                 this.img.style.height = `${newHeight}px`;
 
-                // Optionally, update the container's dimensions to match the image
                 this.container.style.width = `${newWidth}px`;
                 this.container.style.height = `${newHeight}px`;
             }
         });
 
-        // Mouse up ends resizing
         document.addEventListener('mouseup', () => {
             if (isResizing) {
                 isResizing = false;
@@ -285,38 +267,40 @@ class ImageComponent {
         });
     }
 
-
     selectComponent() {
-        // If there is already a selected component, deselect it
         if (selectedComponent && selectedComponent !== this) {
             selectedComponent.deselectComponent();
         }
 
-        // Select this component and increase its zIndex
         this.zIndex += 1;
         this.container.style.zIndex = `${this.zIndex}`;
         this.selected = true;
-        this.container.style.border = '1px solid #FF7F50'; // Highlight border
+        this.container.style.border = '1px solid #FF7F50';
+        this.downloadButton.style.display = 'block';  // Show download button
         selectedComponent = this;
     }
 
     deselectComponent() {
-        this.zIndex -= 1; // Decrease the zIndex of the previously selected component
+        this.zIndex -= 1;
         this.container.style.zIndex = `${this.zIndex}`;
         this.selected = false;
-        this.container.style.border = 'none'; // Remove the highlight
+        this.container.style.border = 'none';
+        this.downloadButton.style.display = 'none';  // Hide download button
     }
 
-    /**
-     * Updates the component's scale and resizes internal content accordingly.
-     * @param {number} scaleFactor - The new scale factor.
-     */
+    downloadImage() {
+        const a = document.createElement('a');
+        a.href = this.img.src;
+        a.download = this.altText || 'downloaded-image';
+        a.click();
+    }
+
     updateScale(scaleFactor) {
         this.scale = scaleFactor;
         this.container.style.transform = `scale(${this.scale})`;
-        // Since ImageComponent doesn't have internal text elements, no need to update font sizes
     }
 }
+
 
 
 /**
@@ -351,8 +335,8 @@ class ColorSwatchComponent {
         this.container.style.left = `${this.position.x}px`;
         this.container.style.top = `${this.position.y}px`;
         this.container.style.zIndex = `${this.zIndex}`;
-        this.container.style.width = '250px';
-        this.container.style.height = '350px';
+        this.container.style.width = '200px';
+        this.container.style.height = '200px';
         this.container.style.backgroundColor = this.color;
         this.container.style.borderRadius = '20px';
         this.container.style.cursor = 'move';
@@ -363,13 +347,13 @@ class ColorSwatchComponent {
         this.container.style.alignItems = 'center';
         this.container.style.justifyContent = 'center';
         this.container.style.padding = '10px';
-                this.container.style.border = this.selected ? '2px solid blue' : 'none';
+        this.container.style.border = this.selected ? '2px solid blue' : 'none';
 
         // Label
         this.title = document.createElement('div');
         this.title.innerText = this.label;
         this.title.style.marginBottom = '10px';
-        this.title.style.fontSize = '1.3em';
+        this.title.style.fontSize = '1.1em';
         this.title.style.fontWeight = 'bold';
         this.title.style.textAlign = 'center';
         this.title.style.color = determineTextColor(this.color);
@@ -377,7 +361,7 @@ class ColorSwatchComponent {
 
         // Description
         this.description = document.createElement('div');
-        this.description.style.fontSize = '0.9em';
+        this.description.style.fontSize = '1em';
         this.description.style.textAlign = 'center';
         this.description.style.color = determineTextColor(this.color);
         this.description.style.transition = 'font-size 0.2s';
@@ -387,7 +371,7 @@ class ColorSwatchComponent {
         this.hexValue = document.createElement('div');
         this.hexValue.classList.add('color-info');
         this.hexValue.innerText = `Hex: ${this.color}`;
-        this.hexValue.style.fontSize = '15px';
+        this.hexValue.style.fontSize = '13px';
         this.hexValue.style.color = determineTextColor(this.color);
         this.hexValue.style.transition = 'font-size 0.2s';
         this.hexValue.style.display = 'flex'; 
@@ -401,7 +385,7 @@ class ColorSwatchComponent {
         this.rgbaValue = document.createElement('div');
         this.rgbaValue.classList.add('color-info');
         this.rgbaValue.innerText = `RGBA: ${hexToRgba(this.color)}`;
-        this.rgbaValue.style.fontSize = '15px';
+        this.rgbaValue.style.fontSize = '13px';
         this.rgbaValue.style.color = determineTextColor(this.color);
         this.rgbaValue.style.transition = 'font-size 0.2s';
         this.rgbaValue.style.display = 'flex'; 
@@ -506,12 +490,12 @@ class ColorSwatchComponent {
      * @param {number} x - New X position.
      * @param {number} y - New Y position.
      */
-        updatePosition(x, y) {
-            // Ensure the text box stays within the active tab boundaries
-            this.container.style.left = `${x}px`;
-            this.container.style.top = `${y}px`;
-            this.position.x = x;
-            this.position.y = y;
+    updatePosition(x, y) {
+        // Ensure the text box stays within the active tab boundaries
+        this.container.style.left = `${x}px`;
+        this.container.style.top = `${y}px`;
+        this.position.x = x;
+        this.position.y = y;
     }
        
 
@@ -562,8 +546,8 @@ class ColorSwatchComponent {
         if (isResizing && !isMoving) {
             const dx = e.clientX - startX;
             const dy = e.clientY - startY;
-            const newWidth = Math.max(startWidth + dx, 200); // Minimum width of 200px
-            const newHeight = Math.max(startHeight + dy, 200); // Minimum height of 200px
+            const newWidth = Math.max(startWidth + dx, 200); 
+            const newHeight = Math.max(startHeight + dy, 200); 
 
             this.container.style.width = `${newWidth}px`;
             this.container.style.height = `${newHeight}px`; // Adjust height
@@ -577,14 +561,14 @@ class ColorSwatchComponent {
             const scaleFactorHeight = newHeight / baseHeight;
 
             // Set maximum scale factor to avoid excessive growth
-            const maxScaleFactor = 4; // Limit the scaling to twice the original size
-            this.scale = Math.min(scaleFactorWidth, scaleFactorHeight, maxScaleFactor); // Use the smaller scale factor
+            const maxScaleFactor = 4; 
+            this.scale = Math.min(scaleFactorWidth, scaleFactorHeight, maxScaleFactor); 
 
             // Define base font sizes in pixels
-            const baseTitleFontSize = 35; 
+            const baseTitleFontSize = 50; 
             const baseDescriptionFontSize = 40; 
-            const baseHexFontSize = 25; 
-            const baseRgbaFontSize = 25; 
+            const baseHexFontSize = 35; 
+            const baseRgbaFontSize = 35; 
 
             // Update font sizes with proper template literals
             this.title.style.fontSize = `${baseTitleFontSize * this.scale}px`;
@@ -613,9 +597,9 @@ class ColorSwatchComponent {
 let isMoving = false; // Global flag to indicate if the grid is moving
 let current_x = -5000; // Initial X position for components (center of 10000px grid)
 let current_y = -5000; // Initial Y position for components
-const spacing = 320; // Space between components (adjust as needed)
-const scaleStep = 0.1; // Zoom step
-let scale = 1; // Initial scale
+const spacing = 320;
+const scaleStep = 0.1; 
+let scale = 1;
 
 const virtualWhiteboard = document.getElementById('virtual-whiteboard');
 const moveButton = document.getElementById('toggleMove');
@@ -656,7 +640,7 @@ tabs.forEach(tab => {
     tab.addEventListener('click', function(e) {
         e.preventDefault();
         const tabId = this.getAttribute('data-tab');
-        const tabText = this.textContent; // Get the text of the clicked tab
+        const tabText = this.textContent; 
 
         // Remove active class from all tab contents
         tabContents.forEach(content => content.classList.remove('active'));
@@ -723,14 +707,13 @@ document.addEventListener('mouseup', () => {
 
 // Function to update the transform style
 function updateTransform() {
-    // Calculate the translate value to keep zoom centered on (0, 0)
     virtualWhiteboard.style.transform = `translate(${current_x}px, ${current_y}px) scale(${scale})`;
 }
 
 // Function to update the coordinates display
 function updateCoordinates(x, y) {
-    const centerOffset = 5000; // Half of 10000px
-    const relativeX = Math.round((x + centerOffset) / 25); // Divided by grid size (25px)
+    const centerOffset = 5000; 
+    const relativeX = Math.round((x + centerOffset) / 25); 
     const relativeY = Math.round((y + centerOffset) / 25);
     coordinatesDisplay.textContent = `X: ${relativeX}, Y: ${relativeY}`;
 }
@@ -742,15 +725,15 @@ window.addEventListener('load', () => {
 
 // Zoom In button
 document.getElementById('zoomIn').addEventListener('click', () => {
-    updateTransform(); // Apply the new transform
-    scale += scaleStep; // Increase scale
-    updateTransform(); // Apply the new transform
+    updateTransform(); 
+    scale += scaleStep; 
+    updateTransform(); 
 });
 
 // Zoom Out button
 document.getElementById('zoomOut').addEventListener('click', () => {
     scale -= scaleStep;
-    updateTransform(); // Apply the new transform
+    updateTransform(); 
 });
 
 
@@ -766,11 +749,10 @@ window.onload = function () {
     sitename = sessionData.getAttribute('site-name');
     userId = sessionData.getAttribute('user-id');
 
-
     // Check if both username and auth id are present and valid (not "None" or empty)
     const isUserLoggedIn = currentUserName && currentUserName !== "None" && dataAuthId && dataAuthId !== "None";
 
-    // Fetch data from '/get-features' route (if needed, not affecting the buttons logic)
+    // Fetch data from '/get-features' route
     const urlPath = window.location.pathname;
     const url = urlPath.slice(1);
 
@@ -793,75 +775,82 @@ window.onload = function () {
             const components = document.getElementById('components');
             const fontTab = document.getElementById('font');
             const colorTab = document.getElementById('color');
-
-            // Center coordinates
-            let initialX = -5000;
-            let initialY = -5000;
-
-            // Display the screenshot in the Components tab
-            var image = new ImageComponent(data.screenshot, 'Screenshot of the page', 300, components, initialX + 9100, initialY + 9900);
+    
+            // Color tab coordinates and layout tracking
+            let colorX = 4500;
+            let colorY = 4800;
+            const colorRowSpacing = 250;  
+            const colorColumnSpacing = 220;  
+    
+            // Helper function to toggle between two rows for the layout
+            const getNextPosition = (index) => {
+                const rowIndex = index % 2; 
+                const colIndex = Math.floor(index / 2); 
+                return { x: colorX + colIndex * colorColumnSpacing, y: colorY + rowIndex * colorRowSpacing };
+            };
+    
+            // Initialize components for Components tab
+            var image = new ImageComponent(data.screenshot, 'Screenshot of the page', 300, components, colorX , colorY );
             images.push(image);
-            initialX += spacing;
-
-            // Display font images in the Font tab
-            data.fontimages.forEach(imageUrl => {
-                var image = new ImageComponent(imageUrl, 'Extracted Font Image', 300, fontTab, initialX + 9100, initialY + 9900);
-                images.push(image);
-                initialX += spacing;
-            });
-
-            // Display color codes in the Color tab
+    
+            // Now create a new ImageComponent instance for the moodBoard
+            var moodBoardImage = new ImageComponent(data.screenshot, 'Screenshot of the page (Mood Board)', 300, moodBoard, colorX -350, colorY );
+            images.push(moodBoardImage);
+    
+            // Initialize color swatches for Color tab and create new instances for MoodBoard
+            let colorIndex = 0;
             data.color_json.forEach(jsonUrl => {
                 fetch(jsonUrl)
                     .then(res => res.json())
                     .then(colors => {
-                        // Add dominant color swatch
-                        if (colors.dominant_color) {
-                            var colorswatch = new ColorSwatchComponent('Dominant Color', colors.dominant_color, colorTab, initialX + 9100, initialY + 9500);
-                            colorswatches.push(colorswatch)
-                            initialX += spacing;
-                        }
-
-                        // Handle palette colors
-                        if (Array.isArray(colors.palette)) {
-                            colors.palette.forEach(color => {
-                                var colorswatch = new ColorSwatchComponent('Palette Color', color.trim(), colorTab, initialX + 9100, initialY + 9500);
-                                colorswatches.push(colorswatch)
-                                initialX += spacing;
-                            });
-                        } else if (typeof colors.palette === 'string') {
-                            colors.palette.split(',').forEach(color => {
-                                var colorswatch = new ColorSwatchComponent('Palette Color', color.trim(), colorTab, initialX + 9100, initialY + 9500);
-                                colorswatches.push(colorswatch)
-                                initialX += spacing;
+                        // Process the color array from the JSON file
+                        if (Array.isArray(colors)) {
+                            colors.forEach(color => {
+                                const { x, y } = getNextPosition(colorIndex++);
+                                var colorswatch = new ColorSwatchComponent(color.name, color.hex, colorTab, x, y);
+                                colorswatches.push(colorswatch);
+    
+                                // Create a new instance for MoodBoard
+                                var moodBoardColorSwatch = new ColorSwatchComponent(color.name, color.hex, moodBoard, x, y);
+                                colorswatches.push(moodBoardColorSwatch);
                             });
                         }
                     })
                     .catch(err => console.error('Error fetching JSON:', err));
             });
-
+    
+            // Initialize font images for Font tab
+            let fontX = 4500;  
+            let fontY = colorY + (2 * colorRowSpacing); 
+            data.fontimages.forEach((imageUrl, index) => {
+                const spacing = 350; 
+                var image = new ImageComponent(imageUrl, 'Extracted Font Image', 300, fontTab, fontX + index * spacing - 100, fontY - 300);
+                images.push(image);
+    
+                // Create new instances for MoodBoard (same row as fonts)
+                var moodBoardFontImage = new ImageComponent(imageUrl, 'Extracted Font Image (Mood Board)', 300, moodBoard, fontX + index * spacing, fontY);
+                images.push(moodBoardFontImage);
+            });
+    
             // Update the navigation bar based on whether the user is logged in (username and auth id are present)
             const loginBtn = document.getElementById('login_btn');
             const pricingLink = document.querySelector('.pricing-link'); 
             const userDashboardLink = document.getElementById('userDashboard'); 
-
+    
             if (isUserLoggedIn) {
                 // User is logged in (username and auth id are valid)
                 loginBtn.style.display = 'none'; 
                 pricingLink.style.display = 'none';
-
+    
                 // Show the dashboard link
                 userDashboardLink.innerHTML = "Dashboard"; 
                 userDashboardLink.href = "dashboard"; 
                 userDashboardLink.style.display = 'flex';
-                userDashboardLink.style.alignItems = 'centre';  
-                userDashboardLink.style.justifyContent = 'centre';
-                
-
+                userDashboardLink.style.alignItems = 'center';  
+                userDashboardLink.style.justifyContent = 'center';
             } else {
                 // User is not logged in (username or auth id is missing or invalid)
                 loginBtn.innerHTML = "Sign in"; 
-                // Show the "Sign in" and "Pricing" links
                 loginBtn.style.display = 'inline'; 
                 pricingLink.style.display = 'flex'; 
                 userDashboardLink.style.display = 'none'; 
@@ -873,9 +862,7 @@ window.onload = function () {
     .catch(error => {
         console.error('Fetch error:', error);
     });
-};
-
-
+}
 
 
 // ============================
@@ -1135,9 +1122,6 @@ class TextBox {
     }
 
 
-
-
-    
     // Method to serialize the text box state for storage
     serialize() {
         return {
@@ -1235,6 +1219,8 @@ document.querySelector('.main-content').addEventListener('click', (e) => {
         document.getElementById('addText').style.backgroundColor = '#22303F';
     }
 });
+
+
 
 
 
@@ -1428,7 +1414,6 @@ document.getElementById('saveButton').addEventListener('click', function() {
     const saveName = document.getElementById('saveName').value.trim();
     const selectedCollections = Array.from(document.querySelectorAll('input[name="collection"]:checked')).map(input => input.value);
     
-
     // Check if the save name is empty
     if (!saveName) {
         alert("Please enter a name to save your board.");
@@ -1451,11 +1436,14 @@ document.getElementById('saveButton').addEventListener('click', function() {
         },
         body: JSON.stringify(data)
     })
-    .then(response => {
-        if (response.ok) {
+    .then(response => response.json())  
+    .then(data => {
+        if (data.message === "Board saved successfully.") {
             alert("Board saved successfully!");
             document.getElementById('saveScreen').style.display = 'none'; 
             window.location.reload();
+        } else if (data.message === "Board limit reached for normal subscription.") {
+            alert("Board limit reached! You cannot save more than 5 boards with a normal subscription.");
         } else {
             alert("Failed to save the board. Please try again.");
         }
@@ -1466,4 +1454,217 @@ document.getElementById('saveButton').addEventListener('click', function() {
     });
 });
 
+
+
+let isDownloadModeActive = false;
+let downloadStartX, downloadStartY, downloadEndX, downloadEndY;
+let downloadButton = document.getElementById('download');
+let selectionBox = document.createElement('div');
+
+// Style for the selection area (dotted lines and blue shade)
+selectionBox.style.position = 'absolute';
+selectionBox.style.border = '2px dashed #3498db';
+selectionBox.style.backgroundColor = 'rgba(52, 152, 219, 0.3)';
+selectionBox.style.pointerEvents = 'none';
+document.body.appendChild(selectionBox);
+
+// Set up download button click event
+downloadButton.addEventListener('click', () => {
+    if (!isDownloadModeActive) {
+        // Enable download mode
+        isDownloadModeActive = true;
+        downloadButton.style.backgroundColor = '#FF7F50';  // Change button color to active state
+        document.body.style.cursor = 'crosshair';          // Change cursor to crosshair
+        disableSelection();                                // Disable text selection
+    }
+});
+
+// Handle mouse down, move, and up events for dragging the screenshot area
+document.addEventListener('mousedown', function (e) {
+    if (isDownloadModeActive) {
+        downloadStartX = e.clientX;
+        downloadStartY = e.clientY;
+
+        // Initialize the position of the selection box
+        selectionBox.style.left = `${downloadStartX}px`;
+        selectionBox.style.top = `${downloadStartY}px`;
+        selectionBox.style.width = '0px';
+        selectionBox.style.height = '0px';
+        selectionBox.style.display = 'block';
+    }
+});
+
+document.addEventListener('mousemove', function (e) {
+    if (isDownloadModeActive) {
+        downloadEndX = e.clientX;
+        downloadEndY = e.clientY;
+
+        // Update the size and position of the selection box
+        selectionBox.style.width = `${Math.abs(downloadEndX - downloadStartX)}px`;
+        selectionBox.style.height = `${Math.abs(downloadEndY - downloadStartY)}px`;
+        selectionBox.style.left = `${Math.min(downloadStartX, downloadEndX)}px`;
+        selectionBox.style.top = `${Math.min(downloadStartY, downloadEndY)}px`;
+    }
+});
+
+document.addEventListener('mouseup', function (e) {
+    if (isDownloadModeActive) {
+        downloadEndX = e.clientX;
+        downloadEndY = e.clientY;
+
+        // Hide the selection box after the drag ends
+        selectionBox.style.display = 'none';
+
+        // Capture the selected area
+        takeScreenshotOfSelection();
+
+        // Auto-disable download mode after one capture
+        isDownloadModeActive = false;
+        downloadButton.style.backgroundColor = '#22303F';  
+        document.body.style.cursor = 'default';            
+        enableSelection();                                 
+    }
+});
+
+// Function to capture the screenshot of the selected area
+function takeScreenshotOfSelection() {
+    // Calculate the width and height of the selected area
+    const selectionWidth = Math.abs(downloadEndX - downloadStartX);
+    const selectionHeight = Math.abs(downloadEndY - downloadStartY);
+    const startX = Math.min(downloadStartX, downloadEndX);
+    const startY = Math.min(downloadStartY, downloadEndY);
+
+    // Hide the button temporarily to avoid capturing it in the screenshot
+    downloadButton.style.display = 'none';
+
+    // Use html2canvas to capture the screenshot
+    html2canvas(document.body, {
+        x: startX,
+        y: startY,
+        width: selectionWidth,
+        height: selectionHeight
+    }).then(canvas => {
+        // Show the button again after capturing
+        downloadButton.style.display = 'block';
+
+        // Create an image link
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');  
+        link.download = 'screenshot.png';           
+        link.click();                               
+    });
+}
+
+// Disable text selection
+function disableSelection() {
+    document.body.style.userSelect = 'none';
+    document.body.style.webkitUserSelect = 'none';
+    document.body.style.mozUserSelect = 'none';
+}
+
+// Re-enable text selection
+function enableSelection() {
+    document.body.style.userSelect = 'auto';
+    document.body.style.webkitUserSelect = 'auto';
+    document.body.style.mozUserSelect = 'auto';
+}
+
+document.getElementById('viewGrid').addEventListener('click', function() {
+    this.classList.toggle('active');
+    
+    // Get the virtual whiteboard element
+    const whiteboard = document.getElementById('virtual-whiteboard');
+    
+    // Toggle the grid lines and background color
+    if (this.classList.contains('active')) {
+        // Hide all lines and set background to white
+        whiteboard.style.backgroundImage = 'none';
+        whiteboard.style.backgroundColor = '#ffffff'; // Set to white
+    } else {
+        // Restore the original grid lines and background color
+        whiteboard.style.backgroundImage = 
+            'linear-gradient(90deg, #e0e0e0 1px, transparent 1px), ' +
+            'linear-gradient(180deg, #e0e0e0 1px, transparent 1px)';
+        whiteboard.style.backgroundColor = ''; // Reset to default
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Remove spaces as the user types
+    const urlInput = document.getElementById("urlInput");
+    urlInput.addEventListener("input", function() {
+        this.value = this.value.replace(/\s/g, ''); 
+    });
+
+    // Function to show the custom alert modal
+    function showAlert() {
+        var modal = document.getElementById("customAlert");
+        var alertMessage = document.getElementById("alertMessage");
+        alertMessage.innerHTML = "<strong style='font-size: 1.5em;'>That's not a valid URL. ☁️</strong> <br> Peew! We think you made a mistake while giving us the URL. Copy and paste the URL again of the webpage you want moodboard for.";
+        modal.style.display = "block"; 
+    }
+
+    // Close the custom alert modal when the OK button is clicked
+    document.getElementById("closeAlertButton").addEventListener("click", function() {
+        var modal = document.getElementById("customAlert");
+        modal.style.display = "none";
+    });
+
+
+    // Close the login modal when the OK button is clicked
+    document.getElementById("loginmodalclose").addEventListener("click", function() {
+        var loginmodal = document.getElementById("customlogin");
+        loginmodal.style.display = "none"; 
+    });
+
+    window.onclick = function(event) {
+        var loginmodal = document.getElementById("customlogin");
+        var alertmodal = document.getElementById("customAlert");
+        if (event.target == loginmodal) {
+            loginmodal.style.display = "none";
+        } else if (event.target == alertmodal) {
+            alertmodal.style.display = "none";
+        }
+    };
+
+    // Process Checker
+    document.getElementById("processButton").addEventListener("click", function() {
+        var url = urlInput.value;
+        if (url === "" || !url.includes(".") || !/\.[a-zA-Z/]{2,}$/.test(url)) {
+            showAlert(); 
+            return;
+        }
+
+        document.getElementById("processButton").disabled = true;
+        fetch('/process', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ url: url }),
+        })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;  
+            } else {
+                return response.json();
+            }
+        })
+        .then(data => {
+            if (data) {
+                console.log('URL processed:', data);
+                urlInput.value = "";  
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            showAlert();  
+        })
+        .finally(() => {
+            document.getElementById("processButton").disabled = false;
+        });
+    
+    });
+});
 

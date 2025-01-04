@@ -1,14 +1,42 @@
-{
-  "dominant_color": "#4547a7",
-  "palette": [
-    "#4545a7",
-    "#bc523d",
-    "#f7f2f1",
-    "#d78e5b",
-    "#ef9384",
-    "#96a8ba",
-    "#ebc9cc",
-    "#66bac1",
-    "#e4c097"
-  ]
-}
+[
+  {
+    "hex": "#ffffff",
+    "name": "White"
+  },
+  {
+    "hex": "#f9f5f3",
+    "name": "Spring Wood"
+  },
+  {
+    "hex": "#be5c3a",
+    "name": "Crail"
+  },
+  {
+    "hex": "#cf4421",
+    "name": "Punch"
+  },
+  {
+    "hex": "#031021",
+    "name": "Black Pearl"
+  },
+  {
+    "hex": "#f7ced5",
+    "name": "Azalea"
+  },
+  {
+    "hex": "#c0c0c0",
+    "name": "Silver"
+  },
+  {
+    "hex": "#faf6f4",
+    "name": "Dawn Pink"
+  },
+  {
+    "hex": "#fbf7f5",
+    "name": "Vista White"
+  },
+  {
+    "hex": "#fbf8f6",
+    "name": "Vista White"
+  }
+]

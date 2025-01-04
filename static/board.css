@@ -20,8 +20,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    backdrop-filter: blur(10px);
-    padding: 25px 50px 15px; 
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    padding: 15px 50px 0px; 
     z-index: 1000;
 }
 
@@ -32,7 +32,7 @@ body {
 
 .menu {
     display: flex;
-    gap: 40px;
+    gap: 30px;
 }
 
 .menu a {
@@ -87,8 +87,8 @@ body {
 .search-bar input {
     padding: 8px 16px;
     padding-right: 40px; 
-    border-radius: 10px;
-    border: 2px solid #cccccc85;
+    border-radius: 20px;
+    border: 2px solid #22303F;
     font-size: 1rem;
     width: 350px;
     height: 28px;
@@ -113,7 +113,7 @@ body {
 }
 
 .dropbtn {
-    background-color: transparent;
+    background-color: #22303F;
     font-size: 1.1em;
     font-weight: bold;
     color: rgb(0, 0, 0);
@@ -121,6 +121,7 @@ body {
     border: 2px solid #00000085;
     cursor: pointer;
     border-radius: 15px;
+    color:white;
 }
 
 .dropdown-content {
@@ -461,7 +462,7 @@ body {
 .move-container {
     position: fixed;
     bottom: 10px;
-    right: 100px; 
+    right: 110px; 
     z-index: 999;
 }
 
@@ -470,8 +471,9 @@ body {
     color: white;
     border: none;
     border-radius: 8px;
-    padding: 8px 12px;
+    padding: 8px 15px;
     font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -493,7 +495,7 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     position: fixed;
     bottom: 10px;
-    right: 10px;
+    right: 15px;
     z-index: 999;
 }
 

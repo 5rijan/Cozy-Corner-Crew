@@ -21,35 +21,35 @@
     <div class="logo-search">
         <div class="logo">
             <a href="{{ url_for('home') }}">
-                <img src="/static/resources/logo.png" alt="Logo" width="150" height="85">
+                <img src="/static/resources/logo.png" alt="Logo" width="120" height="70" >
             </a>
         </div>
         <div class="search-bar">
-            <input type="text" placeholder="Paste a website url..." id="searchInput">
-            <span class="search-icon">→</span>
+            <input type="text" placeholder="Paste a website url..." id="urlInput">
+            <span class="search-icon" id="processButton">→</span>
         </div>
     </div>
 
     <div class="menu">
+        <a href="{{ url_for('pricing') }}" class="pricing-link" style="display: inline;">Pricing</a>
         <div class="dropdown">
-            <button class="dropbtn" id="dropdownBtn">Mood Board</button> 
+            <button class="dropbtn" id="dropdownBtn"> Boards </button> 
             <div class="dropdown-content">
                 <a href="#" data-tab="mood-board">Mood Board</a>
-                <a href="#" data-tab="color">Color</a>
-                <a href="#" data-tab="font">Font</a>
+                <a href="#" data-tab="color">Color Board</a>
+                <a href="#" data-tab="font">Font Board</a>
                 <a href="#" data-tab="components">Components</a>
             </div>
         </div>
-        <a href="{{ url_for('pricing') }}" class="pricing-link" style="display: inline;">Pricing</a>
         <a class="login" id="login_btn" style="display: inline;">Sign in</a>
         <a class="user-dashboard" id="userDashboard" style="display: none;"></a> <!-- User dashboard link -->
         </div>
 </div>
 
-
-
     <!-- Main Content Section (Full screen) -->
     <div class="main-content">
+
+
         <div id="virtual-whiteboard">
             <!-- Tab contents inside the whiteboard -->
             <div id="mood-board" class="tab-content active"></div>
@@ -58,11 +58,12 @@
             <div id="components" class="tab-content"></div>
         </div>
 
-        <!-- Move Button and Coordinates Display -->
-        <div class="coordinates" id="coordinates">X: 0, Y: 0</div>
-        <div class="move-container">
-            <button class="move-button" id="toggleMove">Move</button>
-        </div>
+    <!-- Coordinates Display and Buttons -->
+    <div class="coordinates" id="coordinates">X: 0, Y: 0</div>
+    <div class="move-container">
+    <button class="move-button" id="toggleMove">Move</button>
+    </div>
+
     </div>
 
     <!-- Toolbox Container -->
@@ -78,13 +79,13 @@
             <!-- Background change and Save Buttons -->
             <div class="dashboard-container">
                 <button class="dashboard-button" id="save"> <img src="/static/resources/save.svg" width="25" height="25"> </button>
-                <button class="dashboard-button" id="background-change"> <img src="/static/resources/background.svg" width="25" height="25"> </button>
+                <button class="dashboard-button" id="download"> <img src="/static/resources/background.svg" width="25" height="25"> </button>
             </div>
 
             <!-- Add Text and Empty Buttons -->
             <div class="text-container">
                 <button class="add-text-button" id="addText"> <img src="/static/resources/format-text.svg" width="30" height="30"> </button>
-                <button class="empty-button" id="empty"> <img src="/static/resources/image.svg" width="25" height="25"> </button>
+                <button class="view-grid-button" id="viewGrid"> <img src="static/resources/view-grid.svg" width="25" height="25"> </button>
             </div>
 
             <!-- Draw and Eraser Icons -->
@@ -184,6 +185,8 @@
 
     <!-- Scripts -->
     <script src="/static/board.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 
 </body>
 </html>

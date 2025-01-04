@@ -13,11 +13,12 @@
     <div class="navbar">
         <div class="logo">
             <a href="{{ url_for('home') }}">
-                <img src="/static/resources/logo.png" alt="Logo" width="150" height="85">
+                <img src="/static/resources/logo.png" alt="Logo" width="120" height="70" >
             </a>
         </div>
+        <div class="backdrop"></div>
         <div class="menu">
-            <a href="pricing">Pricing</a>
+            <a href="{{ url_for('pricing') }}">Pricing</a>
             <a class="login" id="login_btn">Sign in</a> 
         </div>
     </div>
@@ -66,7 +67,7 @@
                             <li class="list-group-item">✔️ Enhanced customization options</li>
                             <li class="list-group-item">✔️ Priority customer support</li>
                         </ul>
-                        <a class="btn btn-gradient mt-2">Choose Premium</a>
+                        <a class="btn btn-gradient mt-2" id="login_btn3">Choose Premium</a>
                     </div>
                 </div>
             </div>

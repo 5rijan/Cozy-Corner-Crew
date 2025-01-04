@@ -13,9 +13,10 @@
     <div class="navbar">
         <div class="logo">
             <a href="{{ url_for('home') }}">
-                <img src="/static/resources/logo.png" alt="Logo" width="150" height="85" >
+                <img src="/static/resources/logo.png" alt="Logo" width="120" height="70" >
             </a>
         </div>
+        <div class="backdrop"></div>
         <div class="menu">
             <a href="{{ url_for('pricing') }}">Pricing</a>
             <a class="login" id="login_btn">Sign in</a> 
@@ -29,16 +30,35 @@
 
         <div class="search-container">
             <input class="search-bar" id="urlInput" type="text" placeholder="Paste a website URL...">
-            <button class="search-button" id="processButton">Analyze</button>
+            <button class="search-button" id="processButton">Get Boards</button>
         </div>
     </div>
 
-    <!-- Call to Action Section -->
-    <div class="cta-section">
-        <h2>Save, Analyze, and Explore Designs</h2>
-        <p>Create design boards from your favorite websites and never lose inspiration again!</p>
-    </div>
 
+    <!-- Promotional Section -->
+    <div class="promo-section">
+        <div class="promo-item">
+            <img src="static/resources/promotional/Mood_board.png" alt="Mood Board" class="promo-image">
+            <div class="promo-text">
+                <h3>Transform any website into a personalized mood board</h3>
+                <p>Capture the essence of any design and bring your ideas to life by creating custom mood boards from the web.</p>
+            </div>
+        </div>
+        <div class="promo-item">
+            <img src="static/resources/promotional/Folder.png" alt="Folder" class="promo-image">
+            <div class="promo-text">
+                <h3>Customize, save to your account, and build collections</h3>
+                <p>Organize your inspiration effortlessly and access your mood boards anytime, keeping your creative process smooth.</p>
+            </div>
+        </div>
+        <div class="promo-item">
+            <img src="static/resources/promotional/Tools.png" alt="Tools" class="promo-image">
+            <div class="promo-text">
+                <h3>Add your touch with drawing tools, text, and downloads</h3>
+                <p>Enhance your mood boards with custom edits, annotations, and downloadable options to share your creative journey.</p>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <div class="footer">
@@ -65,16 +85,15 @@
                     <img src="static/resources/Google__G__logo.svg" alt="Google Logo" width="20" height="20">
                     <strong>Continue with Google</strong>
                 </a>
-                <a href="#" id="appleSignIn" class="social-button"> <!-- Use href for Apple sign-in as well -->
+                <a href="#" id="appleSignIn" class="social-button">
                     <img src="static/resources/apple-logo-transparent.png" alt="Apple Logo" width="20" height="20">
                     <strong>Continue with Apple</strong>
                 </a>
-                <a href="#" id="githubSignIn" class="social-button"> <!-- Use href for GitHub sign-in as well -->
+                <a href="#" id="githubSignIn" class="social-button">
                     <img src="static/resources/github-mark.png" alt="GitHub Logo" width="20" height="20">
                     <strong>Continue with GitHub</strong>
                 </a>
             </div>
-
 
             <p class="center-align terms-text">By signing in, you agree to our <br>Privacy Policy and Terms of Use.</p>
         </div>

@@ -7,27 +7,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <div class="page-container">
         <div class="navbar">
-            <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+            <div class="nav-left"></div> <!-- Empty div for alignment -->
+            <div class="nav-right">
+                <a href="" class="Get-premium">Get Premium</a>
+                <!-- Dropdown button for the user -->
+                <div class="user-dropdown">
+                    <button class="user-name-button"></button>
+                    <div class="dropdown-content">
+                        <a href="#" class="settings-option">Settings</a>
+                        <a href="{{ url_for('logout') }}" class="logout-option">Logout</a>
+                    </div>
+                </div>
+            </div>
         </div>
-
+    </div>
+    
         <div class="content">
             <div class="logo">
-                <img src="/static/resources/logo.png" alt="Logo" width="180" height="110">
+                <img src="/static/resources/logo.png" alt="Logo" width="190" height="120">
             </div>
 
             <div id="session-data"
                 data-username="{{ user_name }}"
                 data-authid="{{ auth }}"
                 data-user-id="{{ user_id }}"
+                data-usertype="{{user_type}}"
                 data-boards='{{ boards|tojson }}'
                 data-collections='{{ collections|tojson }}'>
+                
             </div>
 
             <div class="search-container">
-                <input class="search-bar" id="urlInput" type="text" placeholder="Paste a website URL...">
-                <button class="search-button" id="processButton">Analyze</button>
+                <input class="search-bar" id="urlInput" type="text" placeholder="Paste a website URL to get the boards.">
+                <button class="search-button" id="processButton">Get Boards</button>
             </div>
 
             <div class="design-display-container">
@@ -136,6 +151,17 @@
         <div class="alertmodal-content">
             <p id="alertMessage"></p>
             <button id="closeAlertButton">OK</button>
+        </div>
+    </div>
+
+    <!-- Alert Modal premium-->
+    <div id="custompremiumAlert" class="alertmodal">
+        <div class="alertmodal-content">
+            <p>Sorry, but adding collections is currently a premium feature. You can download boards or upgrade to the premium plan to access this feature.</p>
+            <div class="action-buttons">
+                <button id="closepremiumAlertButton"> Cancel</button>
+                <button id="getpremiumAlertButton"> Get Premium</button>
+            </div>
         </div>
     </div>
 

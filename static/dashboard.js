@@ -4,6 +4,7 @@ const dataAuthId = sessionData.getAttribute('data-authid');
 const user_id = sessionData.getAttribute('data-user-id');
 const boards = JSON.parse(sessionData.getAttribute('data-boards'));
 const collections = JSON.parse(sessionData.getAttribute('data-collections'));
+const usertype = sessionData.getAttribute('data-usertype');
 
 
 
@@ -61,6 +62,8 @@ document.addEventListener('DOMContentLoaded', function() {
             alertmodal.style.display = "none";
         }
     };
+
+    document.querySelector('.user-name-button').textContent = currentUserName;
 
     // Process Checker
     document.getElementById("processButton").addEventListener("click", function() {
@@ -216,19 +219,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Sort collections by board count in descending order
+    collections.sort((a, b) => b.boards.length - a.boards.length);
+
     // Render collections as cards
     collections.forEach(collection => {
         const folderCard = document.createElement('div');
         folderCard.classList.add('folder-card');
-        
+
         const folderImage = collection.boards.length > 0 
             ? collection.boards[0].screenshot 
             : 'static/resources/empty-folder.png';
-        
+            
         const boardCountText = collection.boards.length > 0 
             ? `${collection.boards.length} Designs` 
             : 'Empty Folder';
-        
+
         folderCard.innerHTML = `
             <div class="folder-image">
                 <img src="${folderImage}" alt="Folder Image">
@@ -236,14 +242,15 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="folder-name">${collection.name}</div>
             <div class="folder-info">${boardCountText}</div>
         `;
-        
+
         // Click to show collection modal
         folderCard.addEventListener('click', function() {
             showCollectionPopup(collection.id, collection.name, collection.boards);
         });
-    
+
         collectionsContainer.appendChild(folderCard);
     });
+
     
     // Function to show the collection popup
     function showCollectionPopup(collectionId, collectionName, boards) {
@@ -469,6 +476,38 @@ document.getElementById("cancelCreateButton").addEventListener("click", function
     modal.style.display = "none";
 });
 
+// Close the Alert Modal screen
+document.getElementById("closepremiumAlertButton").addEventListener("click", function() {
+    var modal = document.getElementById("custompremiumAlert");
+    modal.style.display = "none";
+});
+
+
+
+// Close the Alert Modal screen
+document.getElementById("getpremiumAlertButton").addEventListener("click", function() {
+    fetch('/create-checkout-session', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_id: user_id })  
+    })
+    .then(function(response) {
+        if (response.ok) {
+            return response.json();
+        }
+        return response.text().then(text => { throw new Error(text) });
+    })
+    .then(function(data) {
+        window.location.href = data.url; 
+    })
+    .catch(function(error) {
+        console.error('Error:', error);
+    });
+});
+
+
 
 
 function editCollection() {
@@ -564,8 +603,14 @@ document.getElementById("createButton").addEventListener("click", function() {
     var collectionName = document.getElementById("newCollectionName").value;
     var userId = user_id;
 
-    console.log(userId)
+    // Check if user is 'normal'
+    if (usertype === 'normal') {
+        var modal = document.getElementById("custompremiumAlert");
+        modal.style.display = "block";    
+        return; 
+    }
 
+    // Proceed with collection creation for 'premium' users
     fetch('/create-collection', {
         method: 'POST',
         headers: {
@@ -591,6 +636,34 @@ document.getElementById("createButton").addEventListener("click", function() {
 });
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    const getPremiumButton = document.querySelector('.Get-premium');
 
+    if (usertype === 'premium') {
+        getPremiumButton.style.display = 'none';  // Hide the button if user is premium
+    }
 
+    getPremiumButton.addEventListener('click', function(event) {
+        event.preventDefault();
 
+        fetch('/create-checkout-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user_id: user_id })  
+        })
+        .then(function(response) {
+            if (response.ok) {
+                return response.json();
+            }
+            return response.text().then(text => { throw new Error(text) });
+        })
+        .then(function(data) {
+            window.location.href = data.url; 
+        })
+        .catch(function(error) {
+            console.error('Error:', error);
+        });
+    });
+});

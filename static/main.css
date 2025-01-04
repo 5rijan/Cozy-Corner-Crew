@@ -1,11 +1,17 @@
 body {
     margin: 0;
     font-family: "Poppins", sans-serif;
-    background-color: #ffffff;
     background-repeat: repeat;
     background-size: auto;
     flex-direction: column; 
     color: #22303F;
+    background-color: #ffffff;
+    background-image: 
+        linear-gradient(90deg, #e0e0e0 1px, transparent 1px),
+        linear-gradient(180deg, #e0e0e0 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px, cover;
+
+
 }
 
 /* Styling for the floating navigation bar */
@@ -18,9 +24,10 @@ body {
     justify-content: space-between;
     align-items: center;
     backdrop-filter: blur(10px); /* Frosted glass effect */
-    padding: 25px 50px 15px; 
+    padding: 15px 50px 0px; 
     z-index: 1000;
 }
+
 
 .logo {
     cursor: pointer;
@@ -72,22 +79,18 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 70vh;
     text-align: center;
-    border-bottom: 2px solid #e0e0e0; 
-
 }
 
 .hero-title {
     font-size: 3em;
     color: #22303F;
-    margin-bottom: 20px;
 }
 
 .hero-subtitle {
     font-size: 1.2em;
     color: #555;
-    margin-bottom: 40px;
 }
 
 /* Large search bar */
@@ -96,46 +99,100 @@ body {
     justify-content: center;
     align-items: center;
     width: 80%;
+    padding-top: 40px;
 }
 
 .search-bar {
     width: 60%;
     height: 40.5px;
     padding: 8px;
-    font-size: 1.1em;
+    font-size: 1em;
     border-radius: 25px;
     border: 2px solid #22303F;
 }
 
 .search-button {
     padding: 15px 30px;
-    font-size: 1.5em;
+    font-size: 1em;
+    min-height: 55px;
     border: none;
+    font-weight: bold;
     background-color: #22303F;
     color: white;
     border-radius: 20px;
     margin-left: 10px;
-    cursor: pointer;
+    cursor: pointer; 
+
 }
 
 .search-button:hover {
     background-color: #FF7F50;
 }
 
-/* Call to Action Section */
-.cta-section {
-    padding: 50px;
-    text-align: center;
+
+
+/* Promotional Section */
+.promo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 0;
 }
 
-.cta-section h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
+.promo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 85%;
+    margin-bottom: 40px;
+    animation: fadeIn 1s ease-in-out;
 }
 
-.cta-section p {
-    font-size: 1.2em;
-    color: #666;
+.promo-item:nth-child(even) .promo-text {
+    order: 1;
+}
+
+.promo-item:nth-child(even) .promo-image {
+    order: 2;
+}
+
+.promo-text {
+    width: 45%;
+    text-align: left;
+    padding: 0 20px;
+}
+
+.promo-text h3 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    color: #22303F;
+}
+
+.promo-text p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.promo-image {
+    width: 45%;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.promo-image:hover {
+    transform: scale(1.05);
+}
+
+/* Animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
@@ -297,3 +354,5 @@ body {
 .footer-link:hover {
     text-decoration: underline;
 }
+
+

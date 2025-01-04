@@ -1,14 +1,42 @@
-{
-  "dominant_color": "#8b9a9a",
-  "palette": [
-    "#94a3a2",
-    "#dbd5c1",
-    "#292f2e",
-    "#506c76",
-    "#6a7069",
-    "#48484d",
-    "#bbc3eb",
-    "#52584b",
-    "#c3d4cf"
-  ]
-}
+[
+  {
+    "hex": "#bfc0bd",
+    "name": "Gray Nickel"
+  },
+  {
+    "hex": "#fffdfb",
+    "name": "Romance"
+  },
+  {
+    "hex": "#1c1c1c",
+    "name": "Cod Gray"
+  },
+  {
+    "hex": "#bac4ee",
+    "name": "Spindle"
+  },
+  {
+    "hex": "#c0c0c0",
+    "name": "Silver"
+  },
+  {
+    "hex": "#222222",
+    "name": "Mine Shaft"
+  },
+  {
+    "hex": "#8c8b8a",
+    "name": "Natural Gray"
+  },
+  {
+    "hex": "#000000",
+    "name": "Black"
+  },
+  {
+    "hex": "#c8c6c4",
+    "name": "Cloud"
+  },
+  {
+    "hex": "#d1cfcd",
+    "name": "Cloud"
+  }
+]

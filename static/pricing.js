@@ -25,6 +25,13 @@ document.getElementById("login_btn2").addEventListener("click", function() {
 });
 
 
+// Show login modal when the "Sign in" button is clicked
+document.getElementById("login_btn3").addEventListener("click", function() {
+    var loginmodal = document.getElementById("customlogin");
+    loginmodal.style.display = "block"; 
+});
+
+
 // Close the login modal when the OK button is clicked
 document.getElementById("loginmodalclose").addEventListener("click", function() {
     var loginmodal = document.getElementById("customlogin");
