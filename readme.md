@@ -3,8 +3,6 @@
 
 Cozy Corner Crew is a web application designed to help users analyze and capture the essence of websites by generating moodboards. Whether you're a designer, a developer, or simply a creative enthusiast, this app lets you extract and save inspirations from your favorite websites in a streamlined and organized way.
 
----
-
 ## **Features**
 ### Moodboard Creation
 - **Website Analysis**: Extract key design elements from a website, including:
@@ -27,8 +25,6 @@ Cozy Corner Crew is a web application designed to help users analyze and capture
 - Stripe integration for premium subscriptions.
 - Unlimited saving and organizing capabilities for subscribed users.
 
----
-
 ## **Tech Stack**
 ### Backend
 - **Framework**: Flask
@@ -39,8 +35,6 @@ Cozy Corner Crew is a web application designed to help users analyze and capture
 ### Frontend
 - **Technologies**: HTML, CSS, and JavaScript.
 - **Libraries**: Utilized various JavaScript libraries for enhanced functionality and responsiveness.
-
----
 
 ## **Installation and Setup**
 
@@ -98,15 +92,11 @@ flask run
 ```
 Visit `http://127.0.0.1:5000` to view the app in your browser.
 
----
-
 ## **Usage**
 1. **Search for a website**: Enter the URL of the website you want to analyze.
 2. **View the moodboard**: The app will generate a moodboard displaying fonts, colors, screenshots, and more.
 3. **Save or organize**: Save your moodboards individually or group them into collections.
 4. **Upgrade to Premium**: Unlock unlimited saving and organizing capabilities.
-
----
 
 ## **Screenshots**
 ### Homepage
@@ -115,12 +105,8 @@ Visit `http://127.0.0.1:5000` to view the app in your browser.
 ### Moodboard Example
 *(Add a screenshot of a generated moodboard here)*
 
----
-
 ## **Contributing**
 Contributions are welcome! Feel free to fork the repository and submit pull requests. 
-
----
 
 ## **Acknowledgments**
 - Flask for the backend framework.
@@ -128,7 +114,5 @@ Contributions are welcome! Feel free to fork the repository and submit pull requ
 - Stripe for seamless payment integration.
 - Flask-Dance for easy OAuth authentication.
 - The creative inspiration from countless designers and developers.
-
----
 
 Happy Moodboarding! 🌟
