@@ -100,10 +100,10 @@ Visit `http://127.0.0.1:5000` to view the app in your browser.
 
 ## **Screenshots**
 ### Homepage
-*(Add a screenshot of the homepage here)*
+![Homepage Screenshot](sample/ccc-1.png)
 
 ### Moodboard Example
-*(Add a screenshot of a generated moodboard here)*
+![Moodboard Screenshot](sample/ccc-8.png)
 
 ## **Contributing**
 Contributions are welcome! Feel free to fork the repository and submit pull requests. 
